@@ -1,0 +1,742 @@
+﻿<Window x:Class="Madrassa.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Madrassa" MinHeight="500" MinWidth="800" >
+    <Grid>
+        <TabControl>
+            <TabItem Header="طلباء" Style="{StaticResource ufonth}" Width="auto">
+                <TabControl TabStripPlacement="Right" >
+                    <TabItem Header="طلباء">
+                        <Border  CornerRadius="10" Background="#BBFAFF">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="132*"/>
+                                    <ColumnDefinition Width="1373*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions >
+                                    <RowDefinition Height="1.2*"/>
+                                    <RowDefinition Height="7*"/>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0" Grid.ColumnSpan="2"   >
+                                    <Grid.ColumnDefinitions>
+
+                                        <ColumnDefinition Width="47" />
+                                        <ColumnDefinition Width="393"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Orientation="Horizontal"  MaxHeight="159" Grid.ColumnSpan="2" >
+                                        <TextBox Margin="10" Name="searchBox" FontSize="13" MaxHeight="25" MinHeight="34"  Text="Search by Name or Father's Name" GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus" Width="300" />
+                                        <Button Content="Search" Width="100" FontSize="18" MaxHeight="25" MinHeight="34"   Style="{StaticResource StylishButtonStyle}" Click="Button_Click_2"  Margin="10" />
+                                    </StackPanel>
+                                    <Button Grid.Column="3" Style="{StaticResource update}"   >ڈیٹ کریں</Button>
+                                    <Button Grid.Column="4"  Style="{StaticResource delte}"  Click="Button_Click_1"  >إزالة البيانات</Button>
+                                    <Button Grid.Column="5" Style="{StaticResource StylishButtonStyle}"  Click="Button_Click" >Refresh</Button>
+                                </Grid>
+
+                                <DataGrid x:Name="datagridstdp" SelectionMode="Extended" HorizontalContentAlignment="Right"  Grid.Row="1"   Margin="10,10,10,10" AutoGenerateColumns="False" Grid.ColumnSpan="2" SelectionChanged="datagridstdp_SelectionChanged" >
+                                    <DataGrid.Resources>
+                                        <Style TargetType="DataGrid">
+                                            <Setter Property="Background" Value="White"/>
+                                            <Setter Property="BorderBrush" Value="#007ACC"/>
+                                            <Setter Property="BorderThickness" Value="1"/>
+                                            <Setter Property="RowHeaderWidth" Value="0"/>
+                                            <Setter Property="AutoGenerateColumns" Value="True"/>
+                                        </Style>
+
+
+                                        <Style TargetType="DataGridRow">
+                                            <Setter Property="Background" Value="#F2F2F2"/>
+                                            <Setter Property="Foreground" Value="#333333"/>
+                                            <Style.Triggers>
+
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#E0E0E0"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="Background" Value="#007ACC"/>
+                                            <Setter Property="Foreground" Value="White"/>
+                                            <Setter Property="BorderBrush" Value="#007ACC"/>
+                                            <Setter Property="BorderThickness" Value="1"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGrid.Resources>
+                                    <DataGrid.Columns  >
+                                        <DataGridTextColumn x:Name="column2"  Binding="{Binding Path=Id}" MinWidth="40"   Header="رجسٹریشن نمبر" />
+                                        <DataGridTextColumn x:Name="column3" Binding="{Binding Path=name}"  Width="auto" Header="نام"/>
+                                        <DataGridTextColumn x:Name="column4" Binding="{Binding Path=fname}" Width="auto" Header="والد کا نام"/>
+                                        <DataGridTextColumn x:Name="column5"  Width="auto" Binding="{Binding Path=sarfname}" MinWidth="170"  Header="سرپرست کا نام"/>
+                                        <DataGridTextColumn x:Name="column6" MinWidth="180"  Width="auto" Binding="{Binding Path=sarfcon}"  Header="سرپرست کا رابطہ نمبر"/>
+                                        <DataGridTextColumn x:Name="column7" MinWidth="180"  Width="auto" Binding="{Binding Path=stdcnic}"  Header="طالب علم شناختی کارڈ"/>
+                                        <DataGridTextColumn x:Name="column8"  MinWidth="180" Width="auto" Binding="{Binding Path=sarfcnic}"  Header="سرپرست سی این آئی سی"/>
+                                        <DataGridTextColumn x:Name="column9" MinWidth="180" Width="auto" Binding="{Binding Path=sarfaresh}"  Header="طالب سے رشتہ"/>
+                                        <DataGridTextColumn x:Name="column10"  Width="auto" Binding="{Binding Path=address}"  Header="مکمل پتہ"/>
+                                        <DataGridTextColumn x:Name="column100" Width="auto" Binding="{Binding Path=dateofbirth}"  Header="تاريخ پيدائش"/>
+                                        <DataGridTextColumn x:Name="column11" Width="auto" Binding="{Binding Path=dateofdahila}"  Header="داخلے کی تاریخ"/>
+                                        <DataGridTextColumn x:Name="column12"  Width="auto" MinWidth="40" Binding="{Binding Path=darga}"  Header="درجہ"/>
+                                        <DataGridTextColumn x:Name="column13" Width="auto" Binding="{Binding Path=nughait}"  Header="نوعیت"/>
+                                        <DataGridTextColumn x:Name="column14"  Width="auto" Binding="{Binding Path=fees}"  Header="فیس"/>
+                                        <!--<DataGridTemplateColumn Header="تصاویر" MinWidth="30" >
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate >
+                                                    <Image x:Name="images" MouseLeftButtonDown="images_MouseLeftButtonDown" Height="30" Source="{Binding Path=image}" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>-->
+
+                                    </DataGrid.Columns>
+
+
+                                </DataGrid>
+
+
+                            </Grid>
+                        </Border>
+                    </TabItem>
+                    <TabItem Header="طالب علم" >
+                        <Grid Background="#BBFAFF">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="150"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button x:Name="show_formadd" Click="show_formadd_Click" Style="{DynamicResource StylishButtonStyle}">show</Button>
+                                <TextBox x:Name="stdid_formadd" Width="100" Margin="5"></TextBox>
+                                <Label>طالب علم کا رجسٹریشن نمبر درج کریں</Label>
+                             </StackPanel>
+                            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                
+                                <Image x:Name="image_formadd" Width="150" Margin="5"></Image>
+                                <StackPanel>
+                                    <Label>نام</Label>
+                                    <Label>والد کا نام</Label>
+                                    <Label>پتہ</Label>
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock x:Name="name_formadd" MinWidth="100" Height="50" MaxWidth="150" Text="{Binding Path=Id}"></TextBlock>
+                                    <TextBlock x:Name="fname_formadd" MinWidth="100" Height="50" MaxWidth="150"></TextBlock>
+                                    <TextBlock x:Name="address_formadd" MinWidth="100" Height="50" MaxWidth="150"></TextBlock>
+                                </StackPanel>
+                                <StackPanel>
+                                    <Label>رابطہ نمبر</Label>
+                                    <Label>CNIC </Label>
+                                    <Label>والد CNIC</Label>
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock x:Name="contact_formadd" MinWidth="100" Height="50" MaxWidth="150"></TextBlock>
+                                    <TextBlock x:Name="cnic_formadd" MinWidth="100" Height="50" MaxWidth="150"></TextBlock>
+                                    <TextBlock x:Name="fcnic_formadd" MinWidth="100" Height="50" MaxWidth="150"></TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                            <DataGrid x:Name="std_formadd" Grid.Row="2" AutoGenerateColumns="False" Background="#BBFAFF">
+                                <DataGrid.Columns >
+                                    <DataGridTextColumn  Header="طالب علم کا رجسٹریشن نمبر" Binding="{Binding Path=studentid}"/>
+                                    <DataGridTextColumn Header="امتحان" Binding="{Binding Path=exam}"/>
+                                    <DataGridTextColumn Header=" حاصل کردہ نمبرات" Binding="{Binding Path=total_marks}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            
+                        </Grid>
+                    </TabItem>
+
+                </TabControl>
+            </TabItem>
+            <TabItem Header="داخلے" Style="{StaticResource ufonth}"   VerticalAlignment="Top" >
+                <TabControl TabStripPlacement="Right">
+                    <TabItem Header="نئے طالب علم">
+                        <Border  CornerRadius="15">
+                            <ScrollViewer >
+                                <Grid Margin="10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto"  />
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+
+                                        <RowDefinition Height="*" MinHeight="200"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid  Grid.Row="7" Margin="20">
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Margin="10" Grid.Column="4"  Style="{StaticResource StylishButtonStyle}" Width="90" MaxHeight="30"  Click="Button_Click_3"  FontSize="18"   >Submit</Button>
+
+
+                                        <Image x:Name="image"  Grid.Column="0"   />
+                                        <Button Grid.Column="0" Background="Transparent"  MouseDoubleClick="Button_MouseDoubleClick"  FontSize="16" Content="Image" ></Button>
+
+                                    </Grid>
+
+                                    <Grid Grid.Row="1" Margin="20,0,0,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox x:Name="stdname" MaxHeight="35" Grid.Column="4"  TextAlignment="Right" ></TextBox>
+                                        <Label Grid.Column="5" VerticalAlignment="Center">طالب علم کا نام</Label>
+
+                                        <TextBox x:Name="fathername" MaxHeight="35" Grid.Column="2"  TextAlignment="Right"></TextBox>
+                                        <Label Grid.Column="3" VerticalAlignment="Center">والد کا نام</Label>
+
+                                        <TextBox x:Name="sarfrastname" MaxHeight="35" FontWeight="Bold" Grid.Column="0" TextAlignment="Right"></TextBox>
+                                        <Label Grid.Column="1" VerticalAlignment="Center">سرپرست کا نام</Label>
+
+                                    </Grid>
+                                    <Grid Grid.Row="2"  Margin="20,0,0,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox x:Name="sarfrastnum" MaxHeight="35" Grid.Column="4"  FontSize="16" TextAlignment="Right"></TextBox>
+                                        <Label Grid.Column="5" FontStyle="Normal" VerticalAlignment="Center" Content="سرپرست کانمبر"/>
+
+                                        <TextBox x:Name="stdcnic" MaxHeight="35" Grid.Column="2" FontSize="16" TextAlignment="Right" ></TextBox>
+                                        <Label Grid.Column="3" FontStyle="Normal" VerticalAlignment="Center"  >نمبرCNIC طالب</Label>
+
+                                        <TextBox x:Name="sarfrastcnic" MaxHeight="35" Grid.Column="0"  FontSize="16" TextAlignment="Right" ></TextBox>
+                                        <Label Grid.Column="1" FontStyle="Normal"  VerticalAlignment="Center"  >نمبرCNIC سرپرست</Label>
+
+                                    </Grid>
+                                    <Grid Grid.Row="3" Margin="20,0,0,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox x:Name="sarfrastreshta" MaxHeight="35" Grid.Column="4" FontSize="16" TextAlignment="Right" ></TextBox>
+                                        <Label Grid.Column="5" VerticalAlignment="Center" >سرپرست سے رشتہ</Label>
+
+                                        <TextBox x:Name="fees" MaxHeight="35" Grid.Column="2" FontSize="16" TextAlignment="Right" ></TextBox>
+                                        <Label Grid.Column="3" VerticalAlignment="Center">فیس</Label>
+
+                                        <DatePicker Name="dateofb" MaxHeight="35" Grid.Column="0" SelectedDateFormat="Short"   FontSize="16" ></DatePicker>
+                                        <Label Grid.Column="1" VerticalAlignment="Center" >تاريخ الميلاد</Label>
+
+                                    </Grid>
+                                    <Grid Grid.Row="4" Margin="20,0,0,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <DatePicker Name="dateofadd" MaxHeight="35" Grid.Column="4" SelectedDateFormat="Short" FontSize="16"   />
+                                        <Label Grid.Column="5" VerticalAlignment="Center" >تاريخ القبول</Label>
+
+                                        <ComboBox x:Name="darja" MaxHeight="35" Grid.Column="2">
+                                            
+                                        </ComboBox>
+                                        <Label   Grid.Column="3" VerticalAlignment="Center">درجہ</Label>
+                                        <ComboBox x:Name="jadeedkadeem" MaxHeight="35" Grid.Column="0">
+                                            <ComboBoxItem>جدید</ComboBoxItem>
+                                            <ComboBoxItem >قدیم</ComboBoxItem>
+                                        </ComboBox>
+                                        <Label Grid.Column="1" VerticalAlignment="Center">نوعیت</Label>
+
+                                    </Grid>
+                                    <Grid Grid.Row="5" Margin="20,0,0,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox x:Name="textaddress" MaxHeight="35" Grid.ColumnSpan="2" Grid.Column="3" FontSize="16" TextAlignment="Right" ></TextBox>
+                                        <Label Grid.Column="5" VerticalAlignment="Center" >مکمل پتہ</Label>
+                                        <TextBox x:Name="stdnum" MaxHeight="35" Grid.Column="1" FontSize="16" TextAlignment="Right" ></TextBox>
+                                        <Label Grid.Column="2" VerticalAlignment="Center" >طالب کا نمبر</Label>
+
+                                    </Grid>
+
+                                    <Grid Grid.Row="6" Margin="20,0,0,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <ComboBox x:Name="moqeemgh" MaxHeight="35" Grid.Column="4">
+                                            <ComboBoxItem>مقیم</ComboBoxItem>
+                                            <ComboBoxItem >غیر مقیم</ComboBoxItem>
+                                        </ComboBox>
+                                        <Label Grid.Column="5" VerticalAlignment="Center">نوعیت</Label>
+                                        
+                                        <Label Grid.Column="5" VerticalAlignment="Center">نوعیت</Label>
+
+                                    </Grid>
+
+
+                                </Grid>
+                            </ScrollViewer>
+                        </Border>
+                    </TabItem>
+                    <TabItem Header="واپس آنے والا طالب علم" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button x:Name="addstd_active" Click="addstd_active_Click"  Style="{DynamicResource StylishButtonStyle}"  MinWidth="250" Margin="10,10,100,10">اس طالب علم کو شامل کریں</Button>
+                                <Button Click="Button_Click_6" Style="{DynamicResource StylishButtonStyle}" Background="Blue">تلاش</Button>
+                                <TextBox x:Name="readdstd_txt" MinWidth="150" ></TextBox>
+                                <Label>طالب علم کا رول نمبر یا نام درج کریں</Label>
+                            </StackPanel>
+
+                            <DataGrid x:Name="singalstddg" Grid.Row="2" SelectionMode="Extended" HorizontalContentAlignment="Right"    Margin="10" AutoGenerateColumns="False" >
+                                <DataGrid.Resources>
+                                    <Style TargetType="DataGrid">
+                                        <Setter Property="Background" Value="White"/>
+                                        <Setter Property="BorderBrush" Value="#007ACC"/>
+                                        <Setter Property="BorderThickness" Value="1"/>
+                                        <Setter Property="RowHeaderWidth" Value="0"/>
+                                        <Setter Property="AutoGenerateColumns" Value="True"/>
+                                    </Style>
+
+                                    <!-- Style for the DataGridRow -->
+                                    <Style TargetType="DataGridRow">
+                                        <Setter Property="Background" Value="#F2F2F2"/>
+                                        <Setter Property="Foreground" Value="#333333"/>
+                                        <Style.Triggers>
+                                            <!-- Highlight row on mouse-over -->
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#E0E0E0"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                    <Style TargetType="DataGridColumnHeader">
+                                        <Setter Property="Background" Value="#007ACC"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="BorderBrush" Value="#007ACC"/>
+                                        <Setter Property="BorderThickness" Value="1"/>
+                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGrid.Resources>
+                                <DataGrid.Columns  >
+                                    <DataGridTextColumn  Binding="{Binding Path=Id}" MinWidth="40"   Header="رجسٹریشن نمبر" />
+                                        <DataGridTextColumn  Binding="{Binding Path=name}"  Width="auto" Header="نام"/>
+                                        <DataGridTextColumn  Binding="{Binding Path=fname}" Width="auto" Header="والد کا نام"/>
+                                        <DataGridTextColumn Width="auto" Binding="{Binding Path=sarfname}" MinWidth="170"  Header="سرپرست کا نام"/>
+                                        <DataGridTextColumn  MinWidth="180"  Width="auto" Binding="{Binding Path=sarfcon}"  Header="سرپرست کا رابطہ نمبر"/>
+                                        <DataGridTextColumn  MinWidth="180"  Width="auto" Binding="{Binding Path=stdcnic}"  Header="طالب علم شناختی کارڈ"/>
+                                        <DataGridTextColumn  MinWidth="180" Width="auto" Binding="{Binding Path=sarfcnic}"  Header="سرپرست سی این آئی سی"/>
+                                        <DataGridTextColumn  MinWidth="180" Width="auto" Binding="{Binding Path=sarfaresh}"  Header="طالب سے رشتہ"/>
+                                        <DataGridTextColumn   Width="auto" Binding="{Binding Path=address}"  Header="مکمل پتہ"/>
+                                        <DataGridTextColumn  Width="auto" Binding="{Binding Path=dateofbirth}"  Header="تاريخ پيدائش"/>
+                                        <DataGridTextColumn  Width="auto" Binding="{Binding Path=dateofdahila}"  Header="داخلے کی تاریخ"/>
+                                        <DataGridTextColumn   Width="auto" MinWidth="40" Binding="{Binding Path=darga}"  Header="درجہ"/>
+                                        <DataGridTextColumn Width="auto" Binding="{Binding Path=nughait}"  Header="نوعیت"/>
+                                        <DataGridTextColumn   Width="auto" Binding="{Binding Path=fees}"  Header="فیس"/>
+
+
+                                    </DataGrid.Columns>
+
+
+                            </DataGrid>
+
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+            <!-- FEES-->
+            <TabItem Header="تعاون" Style="{StaticResource ufonth}" Width="auto">
+
+                <TabControl>
+                    <TabItem Header="فیس">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+                                <TextBox x:Name="year_fees" Margin="10" MaxWidth="100" MinWidth="100"></TextBox>
+                                <Label>سال منتخب کریں</Label>
+                                <TextBox x:Name="month_fees" Margin="10" MaxWidth="100" MinWidth="100"></TextBox>
+                                <Label>مہینہ منتخب کریں</Label>
+                                <Button x:Name="btnfind_fees" Style="{DynamicResource StylishButtonStyle}" Click="btnfind_fees_Click">find</Button>
+                                <ComboBox x:Name="classcombo_fees"></ComboBox>
+                                <Label>درجہ منتخب کریں</Label>
+                                <Button Style="{DynamicResource StylishButtonStyle}" Click="Button_Click_7">submit</Button>
+                                <Button x:Name="btnDelete_fees" Style="{DynamicResource StylishButtonStyle}" Click="btnDelete_fees_Click" Background="Red">Delete</Button>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <TextBox x:Name="idsearch_fees" MinWidth="120" MaxWidth="150" Margin="10" FontSize="20"></TextBox>
+                                <Label VerticalAlignment="Center">Enter student id or name</Label>
+                                <Button x:Name="btnsearch_fees" Click="btnsearch_fees_Click" Style="{StaticResource StylishButtonStyle}">Search</Button>
+                                <Button x:Name="refresh_fees" Click="refresh_fees_Click">Refresh</Button>
+                            </StackPanel>
+
+                            <DataGrid x:Name="datagfees" Grid.Row="2" Margin="5" AutoGenerateColumns="False">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="id"  Binding="{Binding Path=id}"/>
+                                    <DataGridTextColumn Header="رجسٹریشن نمبر" Width="*" Binding="{Binding Path=stdid}"/>
+                                    <DataGridTextColumn Header="جمع کرائی گئی فیس کی رقم" Width="*" Binding="{Binding Path=amount}"/>
+                                    <DataGridTextColumn Header="فیس جمع کرانے کی تاریخ" Width="*" Binding="{Binding Path=date}"/>
+                                    
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </TabItem>
+
+                    <!-- insert fees page-->
+                    <TabItem Header="فیس یہاں داخل کریں">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions >
+                            <StackPanel Margin="60" HorizontalAlignment="Center" Orientation="Horizontal"  Grid.Column="1">
+                                <DatePicker Name="date_fees" MaxHeight="40"></DatePicker>
+                                <Label VerticalAlignment="Center">enter date of fees</Label>
+                                <TextBox x:Name="amount" VerticalAlignment="Center" MaxHeight="50" Width="120" Margin="10"></TextBox>
+                                <Label VerticalAlignment="Center">amount</Label>
+                                <TextBox x:Name="stdid_fees" HorizontalAlignment="Center" MaxHeight="50" SelectionChanged="stdid_fees_SelectionChanged" Width="100" Margin="10"></TextBox>
+                                <Label VerticalAlignment="Center">رجسٹریشن نمبر</Label>
+                            </StackPanel>
+                            <Button x:Name="insertfee" Grid.Row="1" Click="insertfee_Click" Grid.Column="1" HorizontalAlignment="Center" Style="{DynamicResource StylishButtonStyle}">جمع کریں</Button>
+                            <DataGrid x:Name="amountdg_fees" AutoGenerateColumns="False" Margin="10">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="طالب علم کا نام" Binding="{Binding Path=name}"/>
+                                    <DataGridTextColumn Header="والد کا نام" Binding="{Binding Path=fathername}"/>
+                                    <DataGridTextColumn Header="مقدار" Binding="{Binding Path=fees}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                         </Grid>
+                    </TabItem>
+                    <!-- unpaid fees page-->
+                    <TabItem Header="ادا نہ کی گئی فیس" HorizontalAlignment="Right" Margin="0,-2,-2,0" Width="139">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label HorizontalAlignment="Center" FontSize="18">جس طلبہ نے فیس جمع نہیں کیا اُن کا رکارڈ یہاں سے حاصل کرے۔</Label>
+                            <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal">
+                                <TextBox x:Name="month_feesunpay" Margin="5" Width="100"></TextBox>
+                                <Label>مہینہ</Label>
+                                <TextBox x:Name="year_feesunpay" Margin="5" Width="100"></TextBox>
+                                <Label>سال</Label>
+                                <ComboBox Name="class_feesunpay" Grid.Row="1" Width="200">
+                                </ComboBox>
+                                <Label>درجہ</Label>
+                            </StackPanel>
+                            <Button x:Name="showfeesfile" Click="showfeesfile_Click" Grid.Row="2" Style="{DynamicResource StylishButtonStyle}">دکھائيں</Button>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+            <!-- exam-->
+            <TabItem Header="امتحان" Style="{StaticResource ufonth}" Width="auto">
+                <TabControl>
+                    <TabItem Header="نتیجہ" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition MinWidth="100" Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition MinWidth="100" Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="2">امتحان منتخب کریں</Label>
+                                <ComboBox Name="examcombo_search" Margin="10" Grid.Column="1">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding examname}" FontWeight="Bold" />
+                                                <TextBlock Text=" - " />
+                                                <TextBlock Text="{Binding date, StringFormat='MM/dd/yyyy'}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <Label Grid.Column="4">کلاس منتخب کریں</Label>
+                                <ComboBox Name="classcombo_search" Margin="10" SelectionChanged="classcombo_search_SelectionChanged" Grid.Column="3">
+                                </ComboBox>
+                                <Button x:Name="showresult" Grid.Column="8" Click="showresult_Click" Margin="10">Show</Button>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition MinWidth="100" Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition MinWidth="100" Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                
+                            </Grid>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="نتیجہ داخل کریں">
+
+                        <ScrollViewer HorizontalScrollBarVisibility="Visible">
+                            <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <ComboBox x:Name="classname_exam" Margin="10" SelectionChanged="classname_exam_SelectionChanged" Grid.Column="0" MaxWidth="200"></ComboBox>
+                            <Label Grid.Column="1">کلاس منتخب کریں</Label>
+                            <ComboBox x:Name="examcombo" Margin="10" MinWidth="100" Grid.Column="2" >
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding examname}" FontWeight="Bold" />
+                                            <TextBlock Text=" - " />
+                                            <TextBlock Text="{Binding date, StringFormat='MM/dd/yyyy'}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Label Grid.Column="3">امتحان منتخب کریں</Label>
+                            <ComboBox x:Name="subjectid" Grid.Row="2" Margin="10" Grid.Column="0" MaxWidth="200"></ComboBox>
+                            <Label Grid.Row="2" Grid.Column="1">کتاب منتخب کریں</Label>
+                            <TextBox x:Name="studentid_exam" Margin="10" MinWidth="100" SelectionChanged="studentid_exam_SelectionChanged" Grid.Row="2"  Grid.Column="2" MaxWidth="200"></TextBox>
+                            <Label Grid.Row="2" Grid.Column="3">طالب علم کی رجسٹریشن نمبر</Label>
+                            <TextBox x:Name="obtmarks" Grid.Row="3" Margin="10" Grid.Column="2" MaxWidth="200"></TextBox>
+                            <Label Grid.Row="3" Grid.Column="3">حاصل شدہ نمبر</Label>
+                            <TextBox x:Name="deletebtn_examid"  Grid.Column="1" Grid.Row="4" Margin="10"></TextBox>
+                            <Button Grid.Row="4" Margin="10" Click="deletebtn_exam_Click">delete</Button>
+                            <Button x:Name="submit_exam" Margin="10" Click="submit_exam_Click" Grid.Row="4"  Grid.Column="2">submit</Button>
+                            <DataGrid x:Name="namedgrid" Margin="10" Grid.Row="5" Grid.Column="2">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="رجسٹریشن نمبر" Binding="{Binding Path=id}"/>
+                                    <DataGridTextColumn Header="طالب علم کا نام" Binding="{Binding Path=name}"/>
+                                    <DataGridTextColumn Header="درجہ" Binding="{Binding Path=darja}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <DataGrid x:Name="resultexam" Grid.Row="5" Margin="10" Grid.ColumnSpan="2" AutoGenerateColumns="False">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="رجسٹریشن نمبر" Binding="{Binding id}"/>
+                                    <DataGridTextColumn Header="امتحان کا نام" Binding="{Binding studentid}"/>
+                                    <DataGridTextColumn Header="کلاس کا نام" Binding="{Binding exam}"/>
+                                    <DataGridTextColumn Header="کلاس کا نام" Binding="{Binding class}"/>
+                                    <DataGridTextColumn Header="کتاب کا نام" Binding="{Binding subject}"/>
+                                    <DataGridTextColumn Header="حاصل کردہ نمبرات" Binding="{Binding obtmarks}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <StackPanel Grid.Column="4" Orientation="Horizontal">
+                                <ComboBox x:Name="classfilter_exam" MinWidth="70" Margin="10"></ComboBox>
+                                <Label>درجہ</Label>
+                                <TextBox x:Name="yearfilter_exam" MinWidth="70" Margin="10"></TextBox>
+                                <Label>سال</Label>
+                                <Button Width="100" Click="Button_Click_5" Margin="10" >اسے تلاش کریں</Button>
+                            </StackPanel>
+                            <DataGrid x:Name="filterstd_exam" Margin="10" Grid.Column="4" Grid.Row="1" AutoGenerateColumns="False" Grid.RowSpan="5">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID" Binding="{Binding id}"/>
+                                    <DataGridTextColumn Header="نام" Binding="{Binding name}"/>
+                                    <DataGridTextColumn Header="والد کا نام" Binding="{Binding fathername}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            
+                        </Grid>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="امتحان تخلیق کریں ">
+                        <ScrollViewer>
+                            <Grid >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Border BorderBrush="BlueViolet"  CornerRadius="3" BorderThickness="4" Margin="10">
+                                    <StackPanel Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal">
+                                        <Button x:Name="btnclasscreate" Click="btnclasscreate_Click" Grid.Row="1" Margin="10,10,100,10"  Width="150" Style="{DynamicResource StylishButtonStyle}" Content="جمع کریں">
+                                            <Button.ToolTip>
+                                                <TextBlock>مولانا صاحب یہ بٹن نئی کلاس بنانے کے لیے ہے</TextBlock>
+                                            </Button.ToolTip>
+                                        </Button>
+                                        <TextBox x:Name="txtclass" Margin="10"  TextAlignment="Right" MinWidth="150"></TextBox>
+                                        <Label  Grid.Column="5" Margin="10"  MinWidth="150">* یہاں کلاس کا نام درج کریں</Label>
+                                    </StackPanel>
+                                </Border>
+                                <Border Grid.Row="1" BorderBrush="BlueViolet"  CornerRadius="3" BorderThickness="4" Margin="10">
+                                    <StackPanel Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal">
+                                        <Button x:Name="btnsubject" Click="btnsubjectcreate" Grid.Row="1" Margin="10,10,100,10"  Width="150" Style="{DynamicResource StylishButtonStyle}" Content="جمع کریں">
+                                            <Button.ToolTip>
+                                                <TextBlock>مولانا صاحب یہ بٹن نئی کتاب بنانے کے لیے ہے</TextBlock>
+                                            </Button.ToolTip>
+                                        </Button>
+                                        <TextBox x:Name="txtsubject"  Margin="10"  TextAlignment="Right" MinWidth="150"></TextBox>
+                                        <Label  Grid.Column="5" Margin="10"  MinWidth="150">* یہاں کتاب کا نام درج کریں</Label>
+                                    </StackPanel>
+                                </Border>
+                                <Border Grid.Row="2" BorderBrush="BlueViolet"  CornerRadius="3" BorderThickness="4" Margin="10">
+                                    <ScrollViewer HorizontalScrollBarVisibility="Visible">
+                                        <StackPanel  HorizontalAlignment="Center" Orientation="Horizontal">
+                                            <Button x:Name="btnsubjectmarks" Click="btnsubjectmarks_Click" Margin="10,10,10,10"  Width="150" Style="{DynamicResource StylishButtonStyle}" Content="جمع کریں">
+                                                <Button.ToolTip>
+                                                    <TextBlock>یہ بٹن کسی کتاب کو کلاس میں تفویض کرنے کے لئے ہے</TextBlock>
+                                                </Button.ToolTip>
+                                            </Button>
+                                            <ComboBox x:Name="txtclassid" Margin="10"  MinWidth="150">
+
+                                            </ComboBox>
+                                            <Label  Grid.Column="5" Margin="10"  MinWidth="150">* کلاس کا نام منتخب کریں</Label>
+                                            <ComboBox x:Name="txtsubjectid" Margin="10"   MinWidth="150"></ComboBox>
+                                            <Label  Grid.Column="5" Margin="10"  MinWidth="150">* کتاب کا نام منتخب کریں</Label>
+                                            <TextBox x:Name="txtmaxmerks" Margin="10"  TextAlignment="Right" MinWidth="150"></TextBox>
+                                            <Label  Grid.Column="5" Margin="10"  MinWidth="150">*  کتاب کے کل نمبرات لکھے</Label>
+                                        </StackPanel>
+                                    </ScrollViewer>
+                                </Border>
+                                <Border Grid.Row="3" BorderBrush="BlueViolet"  CornerRadius="3" BorderThickness="4" Margin="10">
+                                    <StackPanel  HorizontalAlignment="Center" Orientation="Horizontal">
+                                        <Button x:Name="btnexamcreate" Click="btnexamcreate_Click" Margin="10"  Width="150" Style="{DynamicResource StylishButtonStyle}" Content=" جمع کری">
+                                            <Button.ToolTip>
+                                                <TextBlock>یہ بٹن نئے امتحان کے لئے ہے</TextBlock>
+                                            </Button.ToolTip>
+                                        </Button>
+                                        <TextBox  x:Name="txtexamname" TextAlignment="Right" MinWidth="150"></TextBox>
+                                        <Label   Margin="10"  MinWidth="150">* امتحان کا نام درج کریں</Label>
+
+                                        <DatePicker x:Name="txtexamdate" Margin="10" MinWidth="150"></DatePicker>
+                                        <Label  Grid.Column="5" Margin="10"  MinWidth="150">* امتحان کی تاریخ درج کریں</Label>
+                                    </StackPanel>
+                                </Border>
+                                <Grid Grid.Row="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel >
+                                        
+                                            <Label>کل کتابیں</Label>
+                                            <DataGrid x:Name="booksdg" Margin="10" AutoGenerateColumns="False">
+                                                <DataGrid.Columns>
+                                                    <DataGridTextColumn Header="کتابوں کے نام" Binding="{Binding subjectname}"/>
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                            <Button Margin="10" Click="subjectdelete">منتخب موضوع حذف کریں</Button>
+                                        
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="1" Grid.Column="0">
+                                        <Label>کل درجات</Label>
+                                        <DataGrid x:Name="classesdg" Margin="10" AutoGenerateColumns="False">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="درجات" Binding="{Binding Path=classname}"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                        <Button x:Name="deleteclassid" Click="deleteclassid_Click" Margin="10">منتخب کلاس کو حذف کریں</Button>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="1" Grid.Column="10">
+                                        <Label>مضامین کے نمبر اور درجہ</Label>
+                                        <DataGrid x:Name="marksdg" Margin="10" AutoGenerateColumns="False">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="درجہ" Binding="{Binding Path=classid}"/>
+                                                <DataGridTextColumn Header="کتاب" Binding="{Binding Path=subjectid}"/>
+                                                <DataGridTextColumn Header="کتاب کے نمبرات" Binding="{Binding Path=maxmarks}"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                        <Button x:Name="marksexam" Click="marksexam_Click" Margin="10">منتخب کردہ ڈیٹا حذف کریں</Button>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="0" Grid.Column="10">
+                                        <Label>کل امتحانات</Label>
+                                        <DataGrid x:Name="examsgb" Margin="10" AutoGenerateColumns="False">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="امتحان کا نام" Binding="{Binding Path=examname}"/>
+                                                <DataGridTextColumn Header="تاریخ" Binding="{Binding Path=date}"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                        <Button x:Name="examdelete" Click="examdelete_Click" Margin="10">منتخب امتحان حذف کریں</Button>
+                                    </StackPanel>
+                                    
+                                </Grid>
+                            </Grid>
+                            
+                        </ScrollViewer>
+
+                    </TabItem>
+
+                </TabControl>
+
+            </TabItem>
+            <TabItem Header="file">
+                <Button Content="Export Student Data" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Click="ExportButton_Click"/>
+            </TabItem>
+           
+        </TabControl>
+    </Grid>
+</Window>

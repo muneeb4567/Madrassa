@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="fonts\0 Titr Bold Bold.ttf" />
+    <None Remove="fonts\AAAGoldenLotus Stg1_Ver1 Regular.ttf" />
+    <None Remove="fonts\Nazli Regular.ttf" />
+    <None Remove="fonts\Tanha Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="fonts\AAAGoldenLotus Stg1_Ver1 Regular.ttf" />
+    <Resource Include="fonts\Nazli Regular.ttf" />
+    <Content Include="fonts\Tanha Regular.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="30.0.1" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.3" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="fonts\0 Titr Bold Bold.ttf" />
+  </ItemGroup>
+
+</Project>
