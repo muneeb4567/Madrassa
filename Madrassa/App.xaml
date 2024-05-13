@@ -15,7 +15,7 @@
             <Setter Property="MinHeight" Value="34"/>
             <Setter Property="Width" Value="100"/>
             <Setter Property="MaxWidth" Value="150"/>
-            <Setter Property="Background" Value="#4CAF50"/>
+            <Setter Property="Background" Value="#6BBA6E"/>
             <!-- Green background -->
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="BorderBrush" Value="#388E3C"/>
@@ -26,14 +26,18 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="5">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="5">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="icons/search.png" Width="16" Height="16" Margin="5"/>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </StackPanel>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+
             <Style.Triggers>
                 <!-- Highlight button on mouse-over -->
                 <Trigger Property="IsMouseOver" Value="True">
@@ -55,7 +59,7 @@
             <Setter Property="MinHeight" Value="34"/>
             <Setter Property="Width" Value="100"/>
             <Setter Property="MaxWidth" Value="150"/>
-            <Setter Property="Background" Value="Red"/>
+            <Setter Property="Background" Value="#F17D74"/>
             <!-- Green background -->
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="BorderBrush" Value="#b30000"/>
@@ -66,10 +70,13 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="5">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="5">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/icons/icons8-delete-30.png" Width="16" Height="16" Margin="5"/>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </StackPanel>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>

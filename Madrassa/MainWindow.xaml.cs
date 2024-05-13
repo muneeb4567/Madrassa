@@ -1,7 +1,10 @@
 ﻿
+using BoldReports.Windows;
 using CsvHelper;
 using CsvHelper.Configuration;
+using FastReport;
 using Madrassa.Classes;
+using Madrassa.windows;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -14,6 +17,7 @@ using System.Drawing.Printing;
 using System.Formats.Asn1;
 using System.IO;
 using System.Linq;
+using System.Printing;
 using System.Printing.IndexedProperties;
 using System.Reflection;
 using System.Reflection.PortableExecutable;
@@ -21,10 +25,11 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
-using GDIImage = System.Drawing.Image;
 
 
 namespace Madrassa
@@ -86,7 +91,10 @@ namespace Madrassa
                 MessageBox.Show("An error occurred: " + ex.Message);
             }
         }
-
+        private void btnupdatepro(object sender, RoutedEventArgs e)
+        {
+            
+        }
         private string GenerateCsvContent(IEnumerable<studentdata> students)
         {
             using (var writer = new StringWriter())
@@ -148,7 +156,7 @@ namespace Madrassa
                     {
                         SqlConnection sqlConnection = new SqlConnection(connectionString);
                         sqlConnection.Open();
-                        string query = "delete from addmissionform where id='" + student.Id + "'";
+                        string query = "delete from addmission1 where id='" + student.Id + "'";
                         SqlCommand sc = new SqlCommand(query, sqlConnection);
                         sc.ExecuteNonQuery();
                         students stds = new students();
@@ -247,15 +255,9 @@ namespace Madrassa
 
             }
         }
-        private void Button_Click_4(object sender, RoutedEventArgs e)
-        {
+       
 
-        }
-
-        private void year_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+        
 
         private void refresh_Click(object sender, RoutedEventArgs e)
         {
@@ -302,6 +304,7 @@ namespace Madrassa
                 darja.ItemsSource = allclass;
                 classcombo_fees.ItemsSource = allclass;
                 class_feesunpay.ItemsSource = allclass;
+                upatestdadd_combo.ItemsSource = allclass;
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
@@ -861,14 +864,14 @@ namespace Madrassa
 
         private void showresult_Click(object sender, RoutedEventArgs e)
         {
-
-            var selecteditem = examcombo_search.SelectedItem as exam;
-            string selectedText = $"{selecteditem.examname} - {selecteditem.date.ToString("MM/dd/yyyy")}";
-                Result res = new Result(selectedText);
-                res.Show();
-
+            //var selecteditem = examcombo_search.SelectedItem as exam;
+            //string selectedText = $"{selecteditem.examname} - {selecteditem.date.ToString("MM/dd/yyyy")}";
+            //Result res = new Result(selectedText);
+            //res.Show();
+            // Load the report templated
         }
 
+      
         private void btnDelete_fees_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -961,7 +964,7 @@ namespace Madrassa
             {
                 SqlConnection scon = new SqlConnection(connectionString);
                 scon.Open();
-                string query = "UPDATE addmission1 SET Status = 'Active'  WHERE id ='" + readdstd_txt.Text + "'  AND Status IN ('Active', 'Inactive')";
+                string query = "UPDATE addmission1  SET darja='"+ upatestdadd_combo.SelectedItem+"' , Status = 'Active'  WHERE id ='" + readdstd_txt.Text + "'  AND Status IN ('Active', 'Inactive')";
                 SqlDataAdapter SDA = new SqlDataAdapter(query, scon);
                 DataTable dt = new DataTable();
                 SDA.Fill(dt);
@@ -1019,46 +1022,28 @@ namespace Madrassa
             {
                 try
                 {
-                    studentdata std = new studentdata();
-                    SqlConnection scon = new SqlConnection(connectionString); scon.Open();
-                    string query = "select * from addmission1 where id='" + stdid_formadd.Text + "'";
-                    string query1 = "SELECT studentid, exam, SUM(obtmarks) AS total_marks FROM stdexamresult WHERE studentid = '" + stdid_formadd.Text + "' GROUP BY studentid, exam";
-                    SqlCommand sqlc = new SqlCommand(query, scon);
-                    SqlDataReader sqlreader = sqlc.ExecuteReader();
-                    while (sqlreader.Read())
-                    {
-                        std = new studentdata()
-                        {
-                            Id = (int)sqlreader[0],
-                            name = (string)sqlreader[1],
-                            fname = (string)sqlreader[2],
-                            sarfname = (string)sqlreader[3],
-                            sarfcon = (decimal)sqlreader[4],
-                            stdcnic = (decimal)sqlreader[5],
-                            sarfcnic = (decimal)sqlreader[6],
-                            darga = (string)sqlreader[11],
-                            address = (string)sqlreader[12],
-                            stdnum = (decimal)sqlreader[14],
-                            image = (byte[])sqlreader[16]
-                        };
 
+                    // students stds = new students();
+                    // stds.studentsget();
+                    // studentdata std = new studentdata();
+                    // foreach(studentdata std1 in stds.studentall)
+                    // {
+                    //     if (std1.Id == int.Parse(stdid_formadd.Text)){
+                    //         std =  std1;
+                    //         name_formadd.Text = std.name;
+                    //fname_formadd.Text = std.fname;
+                    //         address_formadd.Text = std.address;
+                    //         contact_formadd.Text = std.stdnum.ToString();
+                    //         cnic_formadd.Text = std.stdcnic.ToString();
+                    //         fcnic_formadd.Text = std.sarfcnic.ToString();
+                    //         BitmapImage bitmapImage = LoadImageFromByteArray(std.image);
+                    //         image_formadd.Source = bitmapImage;
+                    //         contact_formadd.Text = std.stdnum.ToString();
+                    //         cnic_formadd.Text = std.stdcnic.ToString();
+                    //         fcnic_formadd.Text = std.sarfcnic.ToString();}}
 
-                    }
-                    name_formadd.Text = std.name;
-                    fname_formadd.Text = std.fname;
-                    address_formadd.Text = std.address;
-                    contact_formadd.Text = std.stdnum.ToString();
-                    cnic_formadd.Text = std.stdcnic.ToString();
-                    fcnic_formadd.Text = std.sarfcnic.ToString();
-                    BitmapImage bitmapImage = LoadImageFromByteArray(std.image);
-                    image_formadd.Source = bitmapImage;
-                    sqlreader.Close();
-                    SqlDataAdapter SDA = new SqlDataAdapter(query1, scon);
-                    DataTable dt = new DataTable();
-                    SDA.Fill(dt);
-                    std_formadd.ItemsSource = null;
-                    std_formadd.ItemsSource = dt.DefaultView;
-                    scon.Close();
+                    student_Profile student;
+
                 }
                 catch (Exception ex)
                 {
@@ -1093,48 +1078,11 @@ namespace Madrassa
             }
         }
 
+        
         private void showfeesfile_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                // 1. Retrieve student data from the database.
-                List<fees> feesfilter = new List<fees>();
-                SqlConnection scon = new SqlConnection(connectionString);
-                scon.Open();
-                string query = "SELECT fees.*FROM fees INNER JOIN addmission1 ON fees.studentid = addmission1.id INNER JOIN Classes ON addmission1.darja = Classes.classname WHERE Classes.classname = N'"+class_feesunpay.SelectedItem+"'  AND YEAR(fees.date) = '"+year_feesunpay.Text+"' AND MONTH(fees.date) = '"+month_feesunpay.Text+"'";
-                fees f1;
-                SqlCommand sc = new SqlCommand(query, scon);
-                SqlDataReader reader = sc.ExecuteReader();
-                while (reader.Read())
-                {
-                    f1 = new fees()
-                    {
-                        id = (int)reader[0],
-                        stdid = (int)reader[1],
-                        amount = (int)reader[2],
-                        date = (DateTime)reader[3]
-                    };
-                    feesfilter.Add(f1);
-                }
-                scon.Close();
-
-                // 2. Create a method to generate the file content.
-
-                string csvContent = GenerateCsvContent(feesfilter);
-                // 3. Save the content to a file and offer download.
-                string month = month_feesunpay.Text; // Format as desired
-                string year = year_feesunpay.Text;
-                string filePath = $"فیس_{month}-{year}.csv"; // File path where the CSV will be saved
-                File.WriteAllText(filePath, csvContent);
-
-                // 4. Prompt the user to save or open the file.
-                MessageBox.Show("Student data has been exported to StudentData.csv. Click OK to open the file location.");
-                System.Diagnostics.Process.Start("explorer.exe", "/select, " + filePath);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("An error occurred: " + ex.Message);
-            }
+            feesdocu feesd = new feesdocu(class_feesunpay.Text, year_feesunpay.Text, month_feesunpay.Text);
+            feesd.Show();
         }
         private string GenerateCsvContent(IEnumerable<fees> students)
         {

@@ -150,21 +150,28 @@ namespace Madrassa.Classes
         {
             try
             {
-                SqlConnection scon = new SqlConnection(connectionString);
-                scon.Open();
-                string query = "insert into addmission1 values(N'" + student.name + "',N'" + student.fname + "',N'" + student.sarfname + "'," + student.sarfcon + "," + student.stdcnic + "," + student.sarfcnic + ",N'" + student.sarfaresh + "'," + student.fees + ",'" + student.dateofbirth + "',N'" + student.dateofdahila + "',N'" + student.darga + "',N'" + student.address + "',N'" + student.nughait1 + "','" + student.stdnum + "',N'" + student.nughait2 + "',@Data,'Active')";
-                SqlCommand sc = new SqlCommand(query, scon);
-                sc.Parameters.AddWithValue("@Data", student.image);
-                sc.ExecuteNonQuery();
+                using (SqlConnection scon = new SqlConnection(connectionString))
+                {
+                    scon.Open();
 
+                    string query = "INSERT INTO addmission1 VALUES (N'" + student.name + "', N'" + student.fname + "', N'" + student.sarfname + "', " + student.sarfcon + ", " + student.stdcnic + ", " + student.sarfcnic + ", N'" + student.sarfaresh + "', " + student.fees + ", '" + student.dateofbirth.ToString("yyyy-MM-dd") + "', '" + student.dateofdahila.ToString("yyyy-MM-dd") + "', N'" + student.darga + "', N'" + student.address + "', N'" + student.nughait1 + "', " + student.stdnum + ", N'" + student.nughait2 + "', @Data, 'Active')";
+
+                    using (SqlCommand sc = new SqlCommand(query, scon))
+                    {
+                        sc.Parameters.AddWithValue("@Data", student.image);
+                        sc.ExecuteNonQuery();
+                    }
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
+
         public void studentsget()
         {
+            List<studentdata> stdnew = new List<studentdata>();
             try
             {
                 SqlConnection sqlConnection = new SqlConnection(connectionString);
@@ -195,9 +202,9 @@ namespace Madrassa.Classes
                         nughait2 = (string)reader[15],
                         image = (byte[])reader[16]
                     };
-                    studentall.Add(std);
+                    stdnew.Add(std);
                 }
-
+                studentall = stdnew;
                 // Find students in the database that are not in the studentall list
                 var missingStudents = studentall.Where(dbStudent => !studentall.Any(s => s.Id == dbStudent.Id));
 

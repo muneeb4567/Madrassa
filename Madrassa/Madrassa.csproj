@@ -12,6 +12,9 @@
     <None Remove="fonts\AAAGoldenLotus Stg1_Ver1 Regular.ttf" />
     <None Remove="fonts\Nazli Regular.ttf" />
     <None Remove="fonts\Tanha Regular.ttf" />
+    <None Remove="icons\delete.png" />
+    <None Remove="icons\icons8-delete-30.png" />
+    <None Remove="icons\search.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,14 +26,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BoldReports.WPF" Version="5.4.37" />
     <PackageReference Include="CsvHelper" Version="30.0.1" />
-    <PackageReference Include="iTextSharp" Version="5.5.13.3" />
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.1" />
+    <PackageReference Include="FastReport.OpenSource" Version="2024.2.1" />
+    <PackageReference Include="FastReport.OpenSource.Export.PdfSimple" Version="2024.2.1" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="fonts\0 Titr Bold Bold.ttf" />
+    <Resource Include="icons\delete.png" />
+    <Resource Include="icons\icons8-delete-30.png" />
+    <Resource Include="icons\search.png" />
   </ItemGroup>
 
 </Project>
